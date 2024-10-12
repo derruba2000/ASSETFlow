@@ -5,7 +5,7 @@ from database import Base
 
 class Investor(Base):
     __tablename__ = "investors"
-    InvestorID = Column(Integer, primary_key=True, index=True)
+    InvestorID = Column(Integer, primary_key=True, index=True, autoincrement=True)
     Name = Column(String, index=True)
     InvestorType = Column(String)
     ContactInfo = Column(String)

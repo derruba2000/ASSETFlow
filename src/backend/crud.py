@@ -19,10 +19,11 @@ def get_investor(db: Session, investor_id: int):
 
 # Update an investor by ID
 def update_investor(db: Session, investor_id: int, investor: InvestorCreate):
-    db_investor = get_investors(db, investor_id)
+    db_investor = get_investor(db, investor_id)
     if db_investor:
         for key, value in investor.dict().items():
             setattr(db_investor, key, value)
+        
         db.commit()
         db.refresh(db_investor)
     return db_investor
