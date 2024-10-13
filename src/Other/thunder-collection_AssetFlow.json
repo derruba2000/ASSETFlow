@@ -2,7 +2,7 @@
     "clientName": "Thunder Client",
     "collectionName": "AssetFlow",
     "collectionId": "4ceac4ae-a355-4159-9074-7f10d8423326",
-    "dateExported": "2024-10-13T17:14:48.260Z",
+    "dateExported": "2024-10-13T20:34:06.980Z",
     "version": "1.2",
     "folders": [
         {
@@ -17,6 +17,13 @@
             "name": "portfolios",
             "containerId": "",
             "created": "2024-10-13T14:38:34.342Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "9594dcea-2824-4d51-93cb-ff100c0e8e6b",
+            "name": "portfolio_asset_allocation",
+            "containerId": "",
+            "created": "2024-10-13T19:49:36.972Z",
             "sortNum": 20000
         },
         {
@@ -85,11 +92,11 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-10-13T15:06:33.951Z",
-            "modified": "2024-10-13T16:34:37.533Z",
+            "modified": "2024-10-13T19:38:10.489Z",
             "headers": [],
             "body": {
                 "type": "json",
-                "raw": "{\n    \"AssetName\" : \"Stock YYY\",\n    \"AssetType\" : \"Stock\",\n    \"TickerSymbol\": \"YYY\",\n    \"CurrentPrice\" : 20\n}",
+                "raw": "{\n    \"AssetName\" : \"Stock ABC\",\n    \"AssetType\" : \"Stock\",\n    \"TickerSymbol\": \"XXX\",\n    \"CurrentPrice\" : 20\n}",
                 "form": []
             }
         },
@@ -126,6 +133,45 @@
                 "raw": "{\n    \"AssetID\" : 2,\n    \"PortfolioID\" : 1,\n    \"TradeType\" : \"Buy\",\n    \"TradeDate\" : \"2024-10-14\",\n    \"TradePrice\" : \"2.2\",\n    \"Quantity\": 100\n}",
                 "form": []
             }
+        },
+        {
+            "_id": "4dcd76d6-6469-4e84-8024-fb59572c1a11",
+            "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
+            "containerId": "9594dcea-2824-4d51-93cb-ff100c0e8e6b",
+            "name": "allocate",
+            "url": "http://{{url}}:{{port}}/{{folder_name}}/portfolio/1/{{request_name}}?quantity=100.00&purchase_price=3000.00&asset_id=1",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-10-13T19:49:40.786Z",
+            "modified": "2024-10-13T20:11:56.871Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*",
+                    "isDisabled": true
+                },
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [
+                {
+                    "name": "quantity",
+                    "value": "100.00",
+                    "isPath": false
+                },
+                {
+                    "name": "purchase_price",
+                    "value": "3000.00",
+                    "isPath": false
+                },
+                {
+                    "name": "asset_id",
+                    "value": "1",
+                    "isPath": false
+                }
+            ]
         },
         {
             "_id": "583df8de-e4fe-43a3-8d4a-5ba8907fc112",
@@ -179,6 +225,30 @@
             }
         },
         {
+            "_id": "01a15b0e-f1a9-468e-9013-a3b57d748427",
+            "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
+            "containerId": "9594dcea-2824-4d51-93cb-ff100c0e8e6b",
+            "name": "allocations",
+            "url": "http://{{url}}:{{port}}/{{folder_name}}/{{request_name}}?StartDate=2024-10-01&EndDate=2024-10-20",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-10-13T19:49:42.283Z",
+            "modified": "2024-10-13T20:25:39.544Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "StartDate",
+                    "value": "2024-10-01",
+                    "isPath": false
+                },
+                {
+                    "name": "EndDate",
+                    "value": "2024-10-20",
+                    "isPath": false
+                }
+            ]
+        },
+        {
             "_id": "f0faabdb-b897-42f6-8d80-9bd26ea030e4",
             "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
             "containerId": "95593ce6-1052-459f-ad9b-3cb72c99ee86",
@@ -201,6 +271,30 @@
             "created": "2024-10-13T14:38:34.344Z",
             "modified": "2024-10-13T14:58:09.884Z",
             "headers": []
+        },
+        {
+            "_id": "eb14ac69-3272-4ed9-9020-4ca8dd1801fe",
+            "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
+            "containerId": "9594dcea-2824-4d51-93cb-ff100c0e8e6b",
+            "name": "portfolioAllocations",
+            "url": "http://{{url}}:{{port}}/{{folder_name}}/{{request_name}}/1?StartDate=2024-10-01&EndDate=2024-10-20",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-10-13T19:49:43.726Z",
+            "modified": "2024-10-13T20:31:25.380Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "StartDate",
+                    "value": "2024-10-01",
+                    "isPath": false
+                },
+                {
+                    "name": "EndDate",
+                    "value": "2024-10-20",
+                    "isPath": false
+                }
+            ]
         },
         {
             "_id": "8049f178-f0c1-4ce5-bfcc-1b0f854413d3",
@@ -401,6 +495,18 @@
                     "isPath": false
                 }
             ]
+        },
+        {
+            "_id": "304e6b50-e272-482e-af17-e420bd3af17a",
+            "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
+            "containerId": "9594dcea-2824-4d51-93cb-ff100c0e8e6b",
+            "name": "deallocate",
+            "url": "http://{{url}}:{{port}}/{{folder_name}}/{{request_name}}/1",
+            "method": "PUT",
+            "sortNum": 70000,
+            "created": "2024-10-13T20:17:27.775Z",
+            "modified": "2024-10-13T20:18:18.205Z",
+            "headers": []
         }
     ],
     "settings": {
@@ -410,5 +516,5 @@
         },
         "envId": "a6f4b1cb-3242-473a-bfc1-66c51db698a1"
     },
-    "ref": "mZvVwyLEr42obrbgIvGoZMxw_KLzJSuKrp_6HIYCFbr44K_NbzNxIcbGkHKsBwAnGn_8RuzTag2KW3TBc5lfxA"
+    "ref": "mZvVwyLEr42obrbgIvGoZEeraFsBrb0U6w9rbmPGSGhTag37YiNiarp_X4Lbkd895Z0X2Zzlt702OD4PDc1bqw"
 }
