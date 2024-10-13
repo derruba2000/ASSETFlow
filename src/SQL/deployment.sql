@@ -8,14 +8,14 @@ DROP TABLE IF EXISTS trades;
 -- assets definition
 
 CREATE  TABLE assets (
-	"AssetID" INTEGER NOT NULL, 
+	"AssetID" INTEGER NOT NULL PRIMARY KEY  AUTOINCREMENT, 
 	"AssetName" VARCHAR, 
 	"AssetType" VARCHAR, 
 	"TickerSymbol" VARCHAR, 
 	"CurrentPrice" FLOAT,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY ("AssetID")
+	UNIQUE(TickerSymbol)
 );
 
 CREATE INDEX "ix_assets_AssetID" ON assets ("AssetID");
@@ -24,15 +24,16 @@ CREATE INDEX "ix_assets_AssetID" ON assets ("AssetID");
 -- investors definition
 
 CREATE TABLE investors (
-	"InvestorID" INTEGER NOT NULL, 
+	"InvestorID" INTEGER NOT NULL PRIMARY KEY  AUTOINCREMENT,  
 	"Name" VARCHAR, 
 	"InvestorType" VARCHAR, 
 	"ContactInfo" VARCHAR, 
 	"RiskTolerance" VARCHAR, 
 	"AccountBalance" FLOAT,
-	created_at  DEFAULT CURRENT_TIMESTAMP,
-	updated_at  DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY ("InvestorID")
+	is_active BOOLEAN DEFAULT TRUE,
+    inactive_at TIMESTAMP, 
+	created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX "ix_investors_InvestorID" ON investors ("InvestorID");
@@ -42,7 +43,7 @@ CREATE INDEX "ix_investors_Name" ON investors ("Name");
 -- marketdata definition
 
 CREATE TABLE marketdata (
-	"MarketDataID" INTEGER NOT NULL, 
+	"MarketDataID" INTEGER NOT NULL PRIMARY KEY  AUTOINCREMENT,  
 	"AssetID" INTEGER, 
 	"Date" DATE, 
 	"OpeningPrice" FLOAT, 
@@ -52,7 +53,6 @@ CREATE TABLE marketdata (
 	"Volume" INTEGER,
 	created_at  DEFAULT CURRENT_TIMESTAMP,
 	updated_at  DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY ("MarketDataID"), 
 	FOREIGN KEY("AssetID") REFERENCES assets ("AssetID")
 );
 
@@ -62,15 +62,16 @@ CREATE INDEX "ix_marketdata_MarketDataID" ON marketdata ("MarketDataID");
 -- portfolios definition
 
 CREATE TABLE portfolios (
-	"PortfolioID" INTEGER NOT NULL, 
+	"PortfolioID" INTEGER NOT NULL PRIMARY KEY  AUTOINCREMENT,  
 	"InvestorID" INTEGER, 
 	"PortfolioName" VARCHAR, 
 	"PortfolioType" VARCHAR, 
 	"CreationDate" DATE, 
 	"TotalValue" FLOAT,
+	is_active BOOLEAN DEFAULT TRUE,
+    inactive_at TIMESTAMP,
 	created_at  DEFAULT CURRENT_TIMESTAMP,
 	updated_at  DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY ("PortfolioID"), 
 	FOREIGN KEY("InvestorID") REFERENCES investors ("InvestorID")
 );
 
@@ -80,7 +81,7 @@ CREATE INDEX "ix_portfolios_PortfolioID" ON portfolios ("PortfolioID");
 -- riskmetrics definition
 
 CREATE TABLE riskmetrics (
-	"RiskMetricID" INTEGER NOT NULL, 
+	"RiskMetricID" INTEGER NOT NULL PRIMARY KEY  AUTOINCREMENT,  
 	"PortfolioID" INTEGER, 
 	"AssetID" INTEGER, 
 	"MetricName" VARCHAR, 
@@ -88,7 +89,6 @@ CREATE TABLE riskmetrics (
 	"CalculationDate" DATE,
 	created_at  DEFAULT CURRENT_TIMESTAMP,
 	updated_at  DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY ("RiskMetricID"), 
 	FOREIGN KEY("PortfolioID") REFERENCES portfolios ("PortfolioID"), 
 	FOREIGN KEY("AssetID") REFERENCES assets ("AssetID")
 );
@@ -99,7 +99,7 @@ CREATE INDEX "ix_riskmetrics_RiskMetricID" ON riskmetrics ("RiskMetricID");
 -- trades definition
 
 CREATE TABLE trades (
-	"TradeID" INTEGER NOT NULL, 
+	"TradeID" INTEGER NOT NULL PRIMARY KEY  AUTOINCREMENT, 
 	"PortfolioID" INTEGER, 
 	"AssetID" INTEGER, 
 	"TradeType" VARCHAR, 
@@ -108,7 +108,6 @@ CREATE TABLE trades (
 	"Quantity" INTEGER,
 	created_at  DEFAULT CURRENT_TIMESTAMP,
 	updated_at  DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY ("TradeID"), 
 	FOREIGN KEY("PortfolioID") REFERENCES portfolios ("PortfolioID"), 
 	FOREIGN KEY("AssetID") REFERENCES assets ("AssetID")
 );
