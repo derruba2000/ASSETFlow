@@ -9,12 +9,31 @@
             "type": "debugpy",
             "request": "launch",
             "module": "uvicorn",
+            "consoleName": "AssetFlow API",
             "cwd": "${workspaceFolder}\\src\\backend",
             "args": [
                 "main:app",
                 "--reload"
             ],
             "jinja": true
+        },
+        {
+            "name": "Python Debugger: Simulator",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "simulator.py",
+            "consoleName": "Simulator",
+            "cwd": "${workspaceFolder}\\src\\simulator\\",
+            "console": "integratedTerminal",
+            "args": [            
+            ],
+            "jinja": true
+        }
+    ],
+    "compounds": [
+        {
+            "name": "API + Simulator",
+            "configurations": ["Python Debugger: FastAPI",  "Python Debugger: Simulator"]
         }
     ]
 }
