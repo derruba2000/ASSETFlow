@@ -114,3 +114,27 @@ class RiskMetric(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+# app/schemas.py
+from pydantic import BaseModel
+from datetime import datetime
+from typing import Optional
+
+class PortfolioAssetAllocationBase(BaseModel):
+    quantity: float
+    purchase_price: float
+
+class PortfolioAssetAllocationCreate(PortfolioAssetAllocationBase):
+    pass
+
+class PortfolioAssetAllocation(PortfolioAssetAllocationBase):
+    AllocationID: int
+    PortfolioID: int
+    AssetID: int
+    allocated_at: datetime
+    valid_to: Optional[datetime] = None
+    is_allocated: bool
+
+    class Config:
+        orm_mode = True

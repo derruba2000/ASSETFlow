@@ -31,7 +31,8 @@ class Portfolio(Base):
     # Timestamps
     created_at = Column(DateTime, default=func.now(), nullable=False)
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now(), nullable=False)
-
+    # Relationship to the allocation table
+    allocations = relationship("PortfolioAssetAllocation", back_populates="portfolio")
     investor = relationship("Investor")
 
 class Asset(Base):
@@ -44,6 +45,8 @@ class Asset(Base):
     # Timestamps
     created_at = Column(DateTime, default=func.now(), nullable=False)
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now(), nullable=False)
+    # Relationship to the allocation table
+    allocations = relationship("PortfolioAssetAllocation", back_populates="asset")
 
 class Trade(Base):
     __tablename__ = "trades"
@@ -91,3 +94,21 @@ class RiskMetric(Base):
 
     portfolio = relationship("Portfolio", foreign_keys=[PortfolioID])
     asset = relationship("Asset", foreign_keys=[AssetID])
+
+
+
+class PortfolioAssetAllocation(Base):
+    __tablename__ = "portfolio_asset_allocations"
+
+    AllocationID = Column(Integer, primary_key=True, autoincrement=True)
+    PortfolioID = Column(Integer, ForeignKey("portfolios.PortfolioID"), nullable=False)
+    AssetID = Column(Integer, ForeignKey("assets.AssetID"), nullable=False)
+    quantity = Column(Float, nullable=False)  # Quantity of the asset allocated to the portfolio
+    purchase_price = Column(Float, nullable=False)  # Purchase price of the asset
+    allocated_at = Column(DateTime, default=func.now(), nullable=False)  # Allocation timestamp
+    valid_to = Column(DateTime, nullable=True)  # Date when allocation is invalidated
+    is_allocated = Column(Boolean, default=True, nullable=False)  # Allocation state (True if active)
+
+    # Relationships (optional, but useful for easier navigation)
+    portfolio = relationship("Portfolio", back_populates="allocations")
+    asset = relationship("Asset", back_populates="allocations")
