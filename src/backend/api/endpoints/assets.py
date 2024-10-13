@@ -29,6 +29,14 @@ def read_assets(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return assets
 
 
+# GET: Retrieve an asset by ticker symbol
+@router.get("/asset/{tickersymbol}", response_model=Asset)
+def read_asset_by_ticker(tickersymbol: str, db: Session = Depends(get_db)):
+    db_asset = get_asset(db=db, tickersymbol=tickersymbol)
+    if db_asset is None:
+        raise HTTPException(status_code=404, detail="Asset not found")
+    return db_asset
+
 # GET: Retrieve a specific asset by ID
 @router.get("/{asset_id}", response_model=Asset)
 def read_asset(asset_id: int, db: Session = Depends(get_db)):
@@ -38,9 +46,9 @@ def read_asset(asset_id: int, db: Session = Depends(get_db)):
     return db_asset
 
 # PUT: Update an existing Asset by TickerSymbol
-@router.put("/{TickerSymbol}", response_model=Asset)
+@router.put("/{tickersymbol}", response_model=Asset)
 def update_existing_asset(tickersymbol: str, asset: AssetCreate, db: Session = Depends(get_db)):
-    db_asset = update_asset(db=db, tickersymbol=tickersymbol, asset=asset)
+    db_asset = update_asset(db=db, tickersymbol=tickersymbol, Asset=asset)
     if db_asset is None:
         raise HTTPException(status_code=404, detail="Asset not found")
     return db_asset
