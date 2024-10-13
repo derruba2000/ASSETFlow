@@ -1,10 +1,9 @@
 # main.py
-from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.orm import Session
+from fastapi import FastAPI, Depends
 from database import SessionLocal, engine, Base
 
 #---------------------------------------
-from api.endpoints import investors, portfolios
+from api.endpoints import investors, portfolios, assets
 
 # Create the database tables
 Base.metadata.create_all(bind=engine)
@@ -21,3 +20,4 @@ def get_db():
 
 app.include_router(investors.router, prefix="/investors", tags=["Investors"])
 app.include_router(portfolios.router, prefix="/portfolios", tags=["Portfolios"])
+app.include_router(assets.router, prefix="/assets", tags=["Assets"])
