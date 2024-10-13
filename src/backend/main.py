@@ -3,9 +3,8 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine, Base
 
-
-#import crud.crudInvestor as crudInvestor
-from api.endpoints import investors
+#---------------------------------------
+from api.endpoints import investors, portfolios
 
 # Create the database tables
 Base.metadata.create_all(bind=engine)
@@ -21,3 +20,4 @@ def get_db():
         db.close()
 
 app.include_router(investors.router, prefix="/investors", tags=["Investors"])
+app.include_router(portfolios.router, prefix="/portfolios", tags=["Portfolios"])
