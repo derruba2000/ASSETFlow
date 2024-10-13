@@ -2,8 +2,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from schemas.schemas import Investor, InvestorCreate
-from crud import create_investor, get_investors, get_investor, update_investor
+from schemas import Investor, InvestorCreate
+from crud.crudInvestor import create_investor, get_investors, get_investor, update_investor, deactivate_investor
 from database import SessionLocal
 
 router = APIRouter()
@@ -43,3 +43,14 @@ def update_existing_investor(investor_id: int, investor: InvestorCreate, db: Ses
     if db_investor is None:
         raise HTTPException(status_code=404, detail="Investor not found")
     return db_investor
+
+
+# PUT: Deactivate an investor (soft delete)
+@router.put("/deactivate/{investor_id}", response_model=Investor)
+def deactivate_investor_endpoint(investor_id: int, db: Session = Depends(get_db)):
+    db_investor = get_investor(db=db, investor_id=investor_id)
+    if db_investor is None or not db_investor.is_active:
+        raise HTTPException(status_code=404, detail="Investor not found or already inactive")
+    
+    deactivated_investor = deactivate_investor(db=db, investor_id=investor_id)
+    return deactivated_investor

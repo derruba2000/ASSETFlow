@@ -1,5 +1,5 @@
 # models.py
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, Date,  DateTime, func
+from sqlalchemy import Column, Integer, Boolean, String, Float, ForeignKey, Date,  DateTime, func
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -12,6 +12,8 @@ class Investor(Base):
     RiskTolerance = Column(String)
     AccountBalance = Column(Float)
 
+    is_active = Column(Boolean, default=True)  # Default to active
+    inactive_at = Column(DateTime, nullable=True) 
     # Timestamps
     created_at = Column(DateTime, default=func.now(), nullable=False)
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now(), nullable=False)
@@ -24,6 +26,8 @@ class Portfolio(Base):
     PortfolioType = Column(String)
     CreationDate = Column(Date)
     TotalValue = Column(Float)
+    is_active = Column(Boolean, default=True)  # Default to active
+    inactive_at = Column(DateTime, nullable=True) 
     # Timestamps
     created_at = Column(DateTime, default=func.now(), nullable=False)
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now(), nullable=False)

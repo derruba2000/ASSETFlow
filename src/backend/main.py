@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from database import SessionLocal, engine, Base
 
 
-import crud, models, schemas
+#import crud.crudInvestor as crudInvestor
 from api.endpoints import investors
 
 # Create the database tables

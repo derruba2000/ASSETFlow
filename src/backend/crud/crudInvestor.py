@@ -1,7 +1,9 @@
 # crud.py
 from sqlalchemy.orm import Session
-from models.models import Investor, Portfolio, Asset, Trade, MarketData, RiskMetric
-from schemas.schemas import InvestorCreate, PortfolioCreate, AssetCreate, TradeCreate, MarketDataCreate, RiskMetricCreate
+from models import Investor, Portfolio, Asset, Trade, MarketData, RiskMetric
+from schemas import InvestorCreate, PortfolioCreate, AssetCreate, TradeCreate, MarketDataCreate, RiskMetricCreate
+
+from datetime import datetime
 
 def create_investor(db: Session, investor: InvestorCreate):
     db_investor = Investor(**investor.dict())
@@ -26,4 +28,15 @@ def update_investor(db: Session, investor_id: int, investor: InvestorCreate):
         
         db.commit()
         db.refresh(db_investor)
+    return db_investor
+
+
+
+def deactivate_investor(db: Session, investor_id: int):
+    db_investor = get_investor(db, investor_id)
+    if db_investor:
+        db_investor.is_active = False  # Set is_active to False
+        db_investor.inactive_at = datetime.utcnow()  # Set the current timestamp for inactive_at
+        db.commit()
+        db.refresh(db_investor)  # Refresh to get the updated data
     return db_investor
