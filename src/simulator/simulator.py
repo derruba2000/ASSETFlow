@@ -12,8 +12,8 @@ fake = Faker()
 API_BASE_URL = 'http://localhost:8000'  # Change to your API base URL
 
 # Simulation Parameters
-START_DATE = '2000-01-01'
-END_DATE = '2024-10-10'
+#START_DATE = '2000-01-01'
+#END_DATE = '2024-10-10'
 NUM_INVESTORS = 300
 MAX_PORTFOLIOS = 450
 MAX_TRADES = 200
@@ -34,8 +34,8 @@ PORTFOLIO_TYPES = ['Conservative', 'Balanced', 'Aggressive Growth', 'Income-Focu
 
 #-------------------------------------------------------------------------------
 
-START_DATE = datetime.strptime(START_DATE, '%Y-%m-%d')
-END_DATE = datetime.strptime(END_DATE, '%Y-%m-%d')
+#START_DATE = datetime.strptime(START_DATE, '%Y-%m-%d')
+#END_DATE = datetime.strptime(END_DATE, '%Y-%m-%d')
 
 
 # Helper functions
@@ -71,11 +71,16 @@ def create_portfolio(NumInvestors : int):
     PortfolioList=[]
     for portfolioNum in range(MAX_PORTFOLIOS-ExistingPortfolios):
         # Create a portfolio for the investor
+        day1=START_DATE
+        day2=END_DATE
+        if START_DATE > END_DATE:
+            day1=END_DATE
+            day2=START_DATE
         portfolio_data = {
             "InvestorID": random.choice(range(NumInvestors)),
             "PortfolioName": fake.bs().title(),
             "PortfolioType": random.choice(PORTFOLIO_TYPES),
-            "CreationDate": fake.date_between(start_date=START_DATE, end_date=END_DATE).strftime('%Y-%m-%d'),
+            "CreationDate": fake.date_between(start_date=day1, end_date=day2).strftime('%Y-%m-%d'),
             "TotalValue": random.uniform(50000, 1000000)
         }
         PortfolioList.append(portfolio_data)
@@ -153,10 +158,9 @@ def create_trade(portfolio_id, asset_id, date):
     }
     return trade_data
 
-def run_simulator():
+def run_simulator(start_date : datetime, end_date : datetime ):
     """Run the simulation."""
-    start_date = START_DATE #datetime.strptime(START_DATE, '%Y-%m-%d')
-    end_date = END_DATE #datetime.strptime(END_DATE, '%Y-%m-%d')
+   
     delta = timedelta(days=1)
     
     # Create assets
@@ -233,6 +237,13 @@ if __name__ == '__main__':
         print("API is running. Starting simulation...")
         time.sleep(1)
         print("Simulation started.")
-        run_simulator()
+        # two arguments are passed to the script: the start date and the end date
+        import sys
+        startDate=sys.argv[1]
+        endDate=sys.argv[2]
+        START_DATE = datetime.strptime(startDate, '%Y-%m-%d')
+        END_DATE = datetime.strptime(endDate, '%Y-%m-%d')
+        
+        run_simulator(start_date=START_DATE, end_date=END_DATE)
     else:
         print("API is not running. Please start the API first. Ending execution")

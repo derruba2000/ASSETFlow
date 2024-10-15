@@ -13,19 +13,79 @@
             "cwd": "${workspaceFolder}\\src\\backend",
             "args": [
                 "main:app",
-                "--reload"
+                "--reload",
+                "--workers", "4",
+                "--limit-concurrency", "100"
             ],
             "jinja": true
         },
         {
-            "name": "Python Debugger: Simulator",
+            "name": "Simulator Y2000-2005",
             "type": "debugpy",
             "request": "launch",
             "program": "simulator.py",
-            "consoleName": "Simulator",
+            "consoleName": "Simulator Y2000-2005",
             "cwd": "${workspaceFolder}\\src\\simulator\\",
             "console": "integratedTerminal",
-            "args": [            
+            "args": [ 
+                "2000-01-01",
+                "2005-12-29"           
+            ],
+            "jinja": true
+        },
+        {
+            "name": "Simulator Y2006-2010",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "simulator.py",
+            "consoleName": "Simulator Y2006-2010",
+            "cwd": "${workspaceFolder}\\src\\simulator\\",
+            "console": "integratedTerminal",
+            "args": [ 
+                "2006-01-01",
+                "2010-12-29"           
+            ],
+            "jinja": true
+        },
+        {
+            "name": "Simulator Y2011-2015",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "simulator.py",
+            "consoleName": "Simulator Y2011-2015",
+            "cwd": "${workspaceFolder}\\src\\simulator\\",
+            "console": "integratedTerminal",
+            "args": [ 
+                "2011-01-01",
+                "2015-12-29"           
+            ],
+            "jinja": true
+        },
+        {
+            "name": "Simulator Y2016-2020",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "simulator.py",
+            "consoleName": "Simulator Y2016-2020",
+            "cwd": "${workspaceFolder}\\src\\simulator\\",
+            "console": "integratedTerminal",
+            "args": [ 
+                "2016-01-01",
+                "2020-12-29"           
+            ],
+            "jinja": true
+        },
+        {
+            "name": "Simulator dummy",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "simulator.py",
+            "consoleName": "Simulator dummy",
+            "cwd": "${workspaceFolder}\\src\\simulator\\",
+            "console": "integratedTerminal",
+            "args": [ 
+                "2000-12-01",
+                "2000-01-29"           
             ],
             "jinja": true
         }
@@ -33,7 +93,11 @@
     "compounds": [
         {
             "name": "API + Simulator",
-            "configurations": ["Python Debugger: FastAPI",  "Python Debugger: Simulator"]
+            "configurations": ["Python Debugger: FastAPI",  "Simulator Y2000-2005","Simulator Y2006-2010","Simulator Y2011-2015","Simulator Y2016-2020"]
+        },
+        {
+            "name": "API + Simulator no trades",
+            "configurations": ["Python Debugger: FastAPI",  "Simulator dummy"]
         }
     ]
 }
