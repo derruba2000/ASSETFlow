@@ -22,6 +22,18 @@ def create_new_investor(investor: InvestorCreate, db: Session = Depends(get_db))
     db_investor = create_investor(db=db, investor=investor)
     return db_investor
 
+# Read total number of Investors
+@router.get("/investorcount", response_model=int)
+def read_total_investors(db: Session = Depends(get_db)):
+    iterationSize=40
+    totalInvestors=0
+    while True:
+        investors = get_investors(db=db, skip=totalInvestors, limit=iterationSize)
+        if len(investors) < iterationSize:
+            break 
+        totalInvestors += len(investors)
+    return totalInvestors
+
 # GET: Retrieve all investors
 @router.get("/", response_model=List[Investor])
 def read_investors(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):

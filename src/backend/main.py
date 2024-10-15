@@ -24,3 +24,8 @@ app.include_router(assets.router, prefix="/assets", tags=["Assets"])
 app.include_router(market_data.router, prefix="/market_data", tags=["MarketData"])
 app.include_router(trades.router, prefix="/trades", tags=["Trades"])
 app.include_router(portfolio_asset_allocation.router, prefix="/portfolio_asset_allocation", tags=["Portfolio Asset Allocation"])
+
+# create a get hello world endpoint
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}

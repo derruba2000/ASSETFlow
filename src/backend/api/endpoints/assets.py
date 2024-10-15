@@ -29,6 +29,18 @@ def read_assets(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return assets
 
 
+# Read total number of Assets
+@router.get("/assetcount", response_model=int)
+def read_total_assets(db: Session = Depends(get_db)):
+    iterationSize=40
+    totalAssets=0
+    while True:
+        assets = get_assets(db=db, skip=totalAssets, limit=iterationSize)
+        if len(assets) < iterationSize:
+            break 
+        totalAssets += len(assets)
+    return totalAssets
+
 # GET: Retrieve an asset by ticker symbol
 @router.get("/asset/{tickersymbol}", response_model=Asset)
 def read_asset_by_ticker(tickersymbol: str, db: Session = Depends(get_db)):
@@ -53,7 +65,7 @@ def update_existing_asset(tickersymbol: str, asset: AssetCreate, db: Session = D
         raise HTTPException(status_code=404, detail="Asset not found")
     return db_asset
 
-
+# Create multiple assets
 @router.post("/bulk", response_model=List[AssetCreate])
 def create_multiple_assets(asset_data: MultipleAssetsCreate, db: Session = Depends(get_db)):
     created_assets = []
@@ -61,3 +73,5 @@ def create_multiple_assets(asset_data: MultipleAssetsCreate, db: Session = Depen
         db_asset = create_asset(db=db, asset=asset)
         created_assets.append(db_asset)
     return created_assets
+
+

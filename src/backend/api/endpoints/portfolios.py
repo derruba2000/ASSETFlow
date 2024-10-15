@@ -22,6 +22,19 @@ def create_new_Portfolio(portfolio: PortfolioCreate, db: Session = Depends(get_d
     db_Portfolio = create_portfolio(db=db, portfolio=portfolio)
     return db_Portfolio
 
+# Read total number of Portfolios
+@router.get("/portfoliocount", response_model=int)
+def read_total_portfolios(db: Session = Depends(get_db)):
+    iterationSize=40
+    totalPortfolios=0
+    while True:
+        portfolios = get_portfolios(db=db, skip=totalPortfolios, limit=iterationSize)
+        if len(portfolios) < iterationSize:
+            break 
+        totalPortfolios += len(portfolios)
+    return totalPortfolios
+
+
 # GET: Retrieve all Portfolios
 @router.get("/", response_model=List[Portfolio])
 def read_Portfolios(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
