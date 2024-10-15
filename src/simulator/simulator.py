@@ -12,12 +12,12 @@ fake = Faker()
 API_BASE_URL = 'http://localhost:8000'  # Change to your API base URL
 
 # Simulation Parameters
-START_DATE = '2024-10-01'
+START_DATE = '2000-01-01'
 END_DATE = '2024-10-10'
-NUM_INVESTORS = 5
-MAX_PORTFOLIOS = 5
-MAX_TRADES = 5
-NUM_ASSETS = 5
+NUM_INVESTORS = 300
+MAX_PORTFOLIOS = 450
+MAX_TRADES = 200
+NUM_ASSETS = 300
 MIN_ACCOUNT_BALANCE = 1000
 MAX_ACCOUNT_BALANCE = 1000000
 
@@ -82,16 +82,29 @@ def create_portfolio(investor_id):
     response = requests.post(f'{API_BASE_URL}/portfolios/', json=portfolio_data)
     return response.json()['PortfolioID']
 
-def create_asset():
+def create_asset(NumAssets : int):
     """Simulate the creation of an asset."""
-    asset_data = {
-        "AssetName": fake.company(),
-        "AssetType": random.choice(ASSET_TYPES),
-        "TickerSymbol": fake.lexify('????').upper(),
-        "CurrentPrice": random_price()
+
+    # read the existing nuumber of assets from the database
+    response = requests.get(f'{API_BASE_URL}/assets/')
+    NumExistingAssets = len(response.json())
+
+    AssetList=[]
+    for assetNum in range(NumAssets-NumExistingAssets):
+        asset_data = {
+            "AssetName": fake.company(),
+            "AssetType": random.choice(ASSET_TYPES),
+            "TickerSymbol": fake.lexify('????').upper(),
+            "CurrentPrice": random_price()
+        }
+        AssetList.append(asset_data)
+    
+    assetListFinal={
+        "assets" : AssetList
     }
-    response = requests.post(f'{API_BASE_URL}/assets/', json=asset_data)
-    return response.json()['AssetID']
+
+    response = requests.post(f'{API_BASE_URL}/assets/bulk', json=assetListFinal)
+    return 
 
 def create_trade(portfolio_id, asset_id, date):
     """Simulate a trade for a portfolio."""
@@ -113,7 +126,9 @@ def run_simulator():
     delta = timedelta(days=1)
     
     # Create assets
-    assets = [create_asset() for _ in range(NUM_ASSETS)]
+    create_asset(NUM_ASSETS)
+
+   
     
     # Create investors and portfolios
     investors = [create_investor() for _ in range(NUM_INVESTORS)]

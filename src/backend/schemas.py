@@ -1,7 +1,8 @@
 # schemas.py
 from pydantic import BaseModel
-from typing import Optional
-from datetime import date
+from typing import Optional, List
+from datetime import date, datetime
+from datetime import datetime
 
 class InvestorCreate(BaseModel):
     Name: str
@@ -116,10 +117,7 @@ class RiskMetric(BaseModel):
         orm_mode = True
 
 
-# app/schemas.py
-from pydantic import BaseModel
-from datetime import datetime
-from typing import Optional
+
 
 class PortfolioAssetAllocationBase(BaseModel):
     quantity: float
@@ -138,3 +136,21 @@ class PortfolioAssetAllocation(PortfolioAssetAllocationBase):
 
     class Config:
         orm_mode = True
+
+
+class MultipleAssetsCreate(BaseModel):
+    assets: List[AssetCreate]
+
+
+class MultipleInvestorsCreate(BaseModel):
+    investors: List[InvestorCreate]
+
+class MultiplePortfoliosCreate(BaseModel):
+    portfolios: List[PortfolioCreate]
+
+class MultipleTradesCreate(BaseModel):
+    trades: List[TradeCreate]
+
+
+class MultipleMarketDataCreate(BaseModel):
+    marketdata: List[MarketDataCreate]

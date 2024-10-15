@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from schemas import Portfolio, PortfolioCreate
+from schemas import Portfolio, PortfolioCreate, MultiplePortfoliosCreate
 from crud.crudPortfolio import create_portfolio, get_portfolios, get_portfolio, update_portfolio, deactivate_portfolio
 from database import SessionLocal
 
@@ -54,3 +54,12 @@ def deactivate_Portfolio_endpoint(portfolio_id: int, db: Session = Depends(get_d
     
     deactivated_Portfolio = deactivate_portfolio(db=db, portfolio_id=portfolio_id)
     return deactivated_Portfolio
+
+
+@router.post("/bulk", response_model=List[PortfolioCreate])
+def create_multiple_portfolios(portfolio_data: MultiplePortfoliosCreate, db: Session = Depends(get_db)):
+    created_portfolios = []
+    for portfolio in portfolio_data.portfolios:
+        db_portfolio = create_portfolio(db=db, portfolio=portfolio)
+        created_portfolios.append(db_portfolio)
+    return created_portfolios

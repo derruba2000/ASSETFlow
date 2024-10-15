@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from schemas import Trade, TradeCreate
+from schemas import Trade, TradeCreate, MultipleTradesCreate
 from crud.crudTrade import create_trade, get_trades, get_trades_asset, get_trades_portfolio
 from database import SessionLocal
 from datetime import date
@@ -46,5 +46,11 @@ def read_asset_by_ticker(StartDate : date, EndDate : date, portfolio_id: int, sk
         raise HTTPException(status_code=404, detail="Not trades for this asset")
     return trades
 
-
-
+# POST create multiple trades
+@router.post("/bulk", response_model=List[TradeCreate])
+def create_multiple_trades(trade_data: MultipleTradesCreate, db: Session = Depends(get_db)):
+    created_trades = []
+    for trade in trade_data.trades:
+        db_trade = create_trade(db=db, trade=trade)
+        created_trades.append(db_trade)
+    return created_trades

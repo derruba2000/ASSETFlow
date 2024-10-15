@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import date
-from schemas import MarketData, MarketDataCreate
+from schemas import MarketData, MarketDataCreate, MultipleMarketDataCreate
 from crud.crudMarketData import create_market_data, get_market_data, get_market_data_asset
 from database import SessionLocal
 
@@ -56,5 +56,12 @@ def read_market_data(
     return market_data
 
 
-
+# POST create multiple market data records
+@router.post("/bulk", response_model=List[MarketDataCreate])
+def create_multiple_market_data(market_data_list: MultipleMarketDataCreate, db: Session = Depends(get_db)):
+    created_market_data = []
+    for market_data in market_data_list.marketdata:
+        db_market_data = create_market_data(db=db, market_data=market_data)
+        created_market_data.append(db_market_data)
+    return created_market_data
 

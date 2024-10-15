@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from schemas import Investor, InvestorCreate
+from schemas import Investor, InvestorCreate, MultipleInvestorsCreate
 from crud.crudInvestor import create_investor, get_investors, get_investor, update_investor, deactivate_investor
 from database import SessionLocal
 
@@ -54,3 +54,12 @@ def deactivate_investor_endpoint(investor_id: int, db: Session = Depends(get_db)
     
     deactivated_investor = deactivate_investor(db=db, investor_id=investor_id)
     return deactivated_investor
+
+# POST create multiple investors
+@router.post("/bulk", response_model=List[InvestorCreate])
+def create_multiple_investors(investor_data: MultipleInvestorsCreate, db: Session = Depends(get_db)):
+    created_investors = []
+    for investor in investor_data.investors:
+        db_investor = create_investor(db=db, investor=investor)
+        created_investors.append(db_investor)
+    return created_investors

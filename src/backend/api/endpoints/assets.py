@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from schemas import Asset, AssetCreate
+from schemas import Asset, AssetCreate, MultipleAssetsCreate
 from crud.crudAsset import create_asset, get_assets, get_asset, update_asset
 from database import SessionLocal
 
@@ -53,3 +53,11 @@ def update_existing_asset(tickersymbol: str, asset: AssetCreate, db: Session = D
         raise HTTPException(status_code=404, detail="Asset not found")
     return db_asset
 
+
+@router.post("/bulk", response_model=List[AssetCreate])
+def create_multiple_assets(asset_data: MultipleAssetsCreate, db: Session = Depends(get_db)):
+    created_assets = []
+    for asset in asset_data.assets:
+        db_asset = create_asset(db=db, asset=asset)
+        created_assets.append(db_asset)
+    return created_assets
