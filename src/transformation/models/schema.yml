@@ -1,0 +1,14 @@
+
+version: 2
+
+sources:
+  - name: ASSET_FLOW_STAGING
+    description: "AssetFlow RAW landed data"
+    database: RAW
+    schema: STAGING_ASSETFLOW
+    tables:
+      - name: STREAM_ASSETS
+      - name: STREAM_INVESTORS
+      - name: STREAM_PORTFOLIOS
+      - name: STREAM_TRADES
+      - name: STREAM_MARKET_DATA

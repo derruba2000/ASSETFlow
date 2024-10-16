@@ -162,4 +162,5 @@ cython_debug/
 #.idea/
 
 # dlt secrets
-src/.dlt/secrets.toml
+src/**/.dlt/secrets.toml
+src/Ingestion/restapi_pipeline.py
