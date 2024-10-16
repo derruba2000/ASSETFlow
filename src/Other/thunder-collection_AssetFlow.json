@@ -2,7 +2,7 @@
     "clientName": "Thunder Client",
     "collectionName": "AssetFlow",
     "collectionId": "4ceac4ae-a355-4159-9074-7f10d8423326",
-    "dateExported": "2024-10-13T20:34:06.980Z",
+    "dateExported": "2024-10-16T19:11:09.767Z",
     "version": "1.2",
     "folders": [
         {
@@ -249,6 +249,23 @@
             ]
         },
         {
+            "_id": "97e12f9f-8a3f-4a66-ab06-012a30fd7dc1",
+            "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
+            "containerId": "0d3f8e01-fae6-43a1-be1c-2a715811a917",
+            "name": "bulk",
+            "url": "http://{{url}}:{{port}}/{{folder_name}}/{{request_name}}",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-10-15T20:18:12.141Z",
+            "modified": "2024-10-15T20:21:04.374Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"assets\": [\n    {\n      \"AssetName\": \"Apple Inc.\",\n      \"AssetType\": \"stocks\",\n      \"TickerSymbol\": \"AAPL\",\n      \"CurrentPrice\": 150.25\n    },\n    {\n      \"AssetName\": \"Bitcoin\",\n      \"AssetType\": \"crypto\",\n      \"TickerSymbol\": \"BTC\",\n      \"CurrentPrice\": 45000.75\n    },\n    {\n      \"AssetName\": \"Gold\",\n      \"AssetType\": \"commodities\",\n      \"TickerSymbol\": \"XAU\",\n      \"CurrentPrice\": 1800.50\n    }\n  ]\n}",
+                "form": []
+            }
+        },
+        {
             "_id": "f0faabdb-b897-42f6-8d80-9bd26ea030e4",
             "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
             "containerId": "95593ce6-1052-459f-ad9b-3cb72c99ee86",
@@ -407,11 +424,11 @@
             "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
             "containerId": "0d3f8e01-fae6-43a1-be1c-2a715811a917",
             "name": "asset",
-            "url": "http://{{url}}:{{port}}/{{folder_name}}/{{request_name}}/XXX",
+            "url": "http://{{url}}:{{port}}/{{folder_name}}/{{request_name}}/KUIN",
             "method": "GET",
             "sortNum": 50000,
             "created": "2024-10-13T15:28:14.760Z",
-            "modified": "2024-10-13T15:37:09.877Z",
+            "modified": "2024-10-15T22:32:28.965Z",
             "headers": []
         },
         {
@@ -468,6 +485,40 @@
             ]
         },
         {
+            "_id": "84fc675f-3af1-4fd5-8648-78b2c59ba869",
+            "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
+            "containerId": "4e6f7dc5-32b6-4fbd-96b9-8501b902aa7f",
+            "name": "bulk",
+            "url": "http://{{url}}:{{port}}/{{folder_name}}/{{request_name}}",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-10-15T20:47:56.561Z",
+            "modified": "2024-10-15T20:49:31.907Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"portfolios\": [\n    {\n      \"PortfolioName\" : \"Portfolio Y\",\n      \"PortfolioType\" : \"Portfolio Test type\",\n      \"InvestorID\": 1,\n      \"TotalValue\" : 5000000,\n      \"CreationDate\" : \"2024-01-01\"\n    },\n    {\n      \"PortfolioName\" : \"Portfolio X\",\n      \"PortfolioType\" : \"Portfolio Test type 1\",\n      \"InvestorID\": 1,\n      \"TotalValue\" : 500020,\n      \"CreationDate\" : \"2024-02-01\"\n    },\n    {\n      \"PortfolioName\" : \"Portfolio Z\",\n      \"PortfolioType\" : \"Portfolio Test type 2\",\n      \"InvestorID\": 1,\n      \"TotalValue\" : 3000,\n      \"CreationDate\" : \"2024-01-11\"\n    }\n    \n  ]\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "0df51d0e-6160-4acd-a5e0-788ee3a593c1",
+            "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
+            "containerId": "95593ce6-1052-459f-ad9b-3cb72c99ee86",
+            "name": "bulk",
+            "url": "http://{{url}}:{{port}}/{{folder_name}}/{{request_name}}",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-10-15T20:55:36.372Z",
+            "modified": "2024-10-15T20:57:19.083Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"investors\": [\n    {\n      \"Name\" : \"Investor x1\",\n      \"InvestorType\" : \"Test type\",\n      \"ContactInfo\" : \"contact test\",\n      \"RiskTolerance\" : \"Low\",\n      \"AccountBalance\" : 10000\n    },\n    {\n      \"Name\" : \"Investor x2\",\n      \"InvestorType\" : \"Test type1\",\n      \"ContactInfo\" : \"contact test2\",\n      \"RiskTolerance\" : \"Medium\",\n      \"AccountBalance\" : 333\n    }\n  ]\n}",
+                "form": []
+            }
+        },
+        {
             "_id": "b4ef4a6a-d121-4bbe-a049-8320a6344658",
             "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
             "containerId": "460a579c-e4c8-4bca-bd2c-6438e3b15098",
@@ -497,6 +548,35 @@
             ]
         },
         {
+            "_id": "979dd116-fa56-4d64-9e26-960fd6d6c832",
+            "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
+            "containerId": "9683302a-ffec-4496-a0ac-1671dcdc3d2f",
+            "name": "bulk",
+            "url": "http://{{url}}:{{port}}/{{folder_name}}/{{request_name}}",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2024-10-15T21:09:24.703Z",
+            "modified": "2024-10-15T21:26:18.045Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"marketdata\": [\n    {\n      \"AssetID\" : 2,\n      \"Date\" : \"2024-10-14\",\n      \"OpeningPrice\": 1,\n      \"ClosingPrice\": 3,\n      \"HighPrice\": 3.5,\n      \"LowPrice\": 0.8,\n      \"Volume\" : 40\n    },\n    {\n      \"AssetID\" : 1,\n      \"Date\" : \"2024-09-10\",\n      \"OpeningPrice\": 10,\n      \"ClosingPrice\": 3,\n      \"HighPrice\": 13.5,\n      \"LowPrice\": 0.8,\n      \"Volume\" : 500\n    }\n  ]\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "edf7ebfe-9080-449a-8bdd-c55bc6367203",
+            "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
+            "containerId": "0d3f8e01-fae6-43a1-be1c-2a715811a917",
+            "name": "assetcount",
+            "url": "http://{{url}}:{{port}}/{{folder_name}}/{{request_name}}",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2024-10-15T22:26:52.829Z",
+            "modified": "2024-10-15T22:27:05.055Z",
+            "headers": []
+        },
+        {
             "_id": "304e6b50-e272-482e-af17-e420bd3af17a",
             "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
             "containerId": "9594dcea-2824-4d51-93cb-ff100c0e8e6b",
@@ -507,6 +587,23 @@
             "created": "2024-10-13T20:17:27.775Z",
             "modified": "2024-10-13T20:18:18.205Z",
             "headers": []
+        },
+        {
+            "_id": "209fe544-f27f-4094-98a9-e61ea6a69187",
+            "colId": "4ceac4ae-a355-4159-9074-7f10d8423326",
+            "containerId": "460a579c-e4c8-4bca-bd2c-6438e3b15098",
+            "name": "bulk",
+            "url": "http://{{url}}:{{port}}/{{folder_name}}/{{request_name}}",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-10-15T21:02:28.517Z",
+            "modified": "2024-10-15T21:08:27.607Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"trades\": [\n    {\n      \"AssetID\" : 2,\n      \"PortfolioID\" : 1,\n      \"TradeType\" : \"Buy\",\n      \"TradeDate\" : \"2024-10-14\",\n      \"TradePrice\" : \"2.2\",\n      \"Quantity\": 100\n    },\n    {\n      \"AssetID\" : 1,\n      \"PortfolioID\" : 2,\n      \"TradeType\" : \"Sell\",\n      \"TradeDate\" : \"2024-01-21\",\n      \"TradePrice\" : \"4.2\",\n      \"Quantity\": 10\n    }\n  ]\n}",
+                "form": []
+            }
         }
     ],
     "settings": {
@@ -516,5 +613,5 @@
         },
         "envId": "a6f4b1cb-3242-473a-bfc1-66c51db698a1"
     },
-    "ref": "mZvVwyLEr42obrbgIvGoZEeraFsBrb0U6w9rbmPGSGhTag37YiNiarp_X4Lbkd895Z0X2Zzlt702OD4PDc1bqw"
+    "ref": "mZvVwyLEr42obrbgIvGoZOMW2FPKxSv0vOsRMYgrSm-grfS-bfcC2tU9bsfbcS68I7h7HSDqOKuU5KgdHPg8aw"
 }
