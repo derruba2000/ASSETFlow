@@ -5,12 +5,23 @@
     "tasks": [
         {
             "label": "dbt docs",
-            "type": "process",
-            "command" : "cmd",
-            "args": [
-                "-c",
-                ".venv\\Scripts\\activate.bat & cd src\\transformation & dbt docs generate & dbt docs serve"
-            ],
+            "type": "shell",
+            "command" : "C:\\src\\assetflow\\.venv\\Scripts\\activate.bat && cd C:\\src\\assetflow\\src\\transformation && dbt docs generate && dbt docs serve",
+            "options": {
+                    "shell":{
+                        "executable": "cmd.exe",
+                        "args": [
+                            "/d",
+                            "/c"
+                        ]
+                    }
+            },
+            "presentation":{
+                "reveal": "always",
+                "panel": "new",
+                "focus": false,
+                "clear": true
+            },
             "problemMatcher": []
         }
     ]
