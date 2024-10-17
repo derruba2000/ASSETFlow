@@ -17,7 +17,11 @@ SELECT
     P.CONTACT_INFO,
     P.RISK_TOLERANCE,
     P.ACCOUNT_BALANCE,
-    CURRENT_DATE AS VALID_FROM, 
+    {% if is_incremental() %}
+        CURRENT_DATE AS VALID_FROM, 
+    {% else %}
+        CAST('2000-01-01' AS DATE) AS VALID_FROM, 
+    {% endif %}
     HASH(P.INVESTOR_ID, 
          P.NAME,
          P.INVESTOR_TYPE,

@@ -45,58 +45,15 @@ def get_portfolios():
             break
 
 
-def get_market_data(startdate :str, enddate :str):
-    skip=0
-    k=0
-    while True:
-        response = requests.get(f'{API_BASE_URL}/market_data/readAll?skip={skip}&limit={limit}&StartDate={startdate}&EndDate={enddate}')
-        #response.raise_for_status()  # Raise an HTTPError for bad responses
-        page_json = response.json()
-        if page_json:
-            yield page_json
-            skip+=limit
-        else:
-            break
-        
-        k+=1
-        if k > limitPaginations:
-            break
-
-def get_trades(startdate :str, enddate :str):
-    skip=0
-    k=0
-    while True:
-        response = requests.get(f'{API_BASE_URL}/trades/getAll?skip={skip}&limit={limit}&StartDate={startdate}&EndDate={enddate}')
-        #response.raise_for_status()  # Raise an HTTPError for bad responses
-        page_json = response.json()
-        if page_json:
-            yield page_json
-            skip+=limit
-        else:
-            break
-        k+=1
-        if k > limitPaginations:
-            break
-        
 
 if __name__ == '__main__':
     # Use the generator to iterate over pages
     assetflow_pipeline = dlt.pipeline(
-        pipeline_name="AssetFlow",
+        pipeline_name="AssetFlow_static",
         destination="snowflake",
         dataset_name="staging_assetflow",
     )
 
-    # arguments Startdate and Enddate
-    startdate=sys.argv[1]
-    enddate=sys.argv[2]
-
-    # Market Data
-    info = assetflow_pipeline.run(get_market_data(startdate, enddate), table_name="stream_market_data", write_disposition="append" )
-    print(info)
-
-    info = assetflow_pipeline.run(get_trades(startdate, enddate), table_name="stream_trades", write_disposition="append" )
-    print(info)
 
 
     # Fullload

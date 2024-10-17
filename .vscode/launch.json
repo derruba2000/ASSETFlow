@@ -20,44 +20,44 @@
             "jinja": true
         },
         {
-            "name": "Simulator Y2021",
+            "name": "Simulator Y2024-Q1",
             "type": "debugpy",
             "request": "launch",
             "program": "simulator.py",
-            "consoleName": "Simulator Y2021",
+            "consoleName": "Simulator Y2024-Q1",
             "cwd": "${workspaceFolder}\\src\\simulator\\",
             "console": "integratedTerminal",
             "args": [ 
-                "2021-01-01",
-                "2021-12-29"           
+                "2024-01-01",
+                "2024-04-01"           
             ],
             "jinja": true
         },
         {
-            "name": "Simulator Y2022",
+            "name": "Simulator Y2024-Q2",
             "type": "debugpy",
             "request": "launch",
             "program": "simulator.py",
-            "consoleName": "Simulator Y2022",
+            "consoleName": "Simulator Y2024-Q2",
             "cwd": "${workspaceFolder}\\src\\simulator\\",
             "console": "integratedTerminal",
             "args": [ 
-                "2022-01-01",
-                "2022-12-29"           
+                "2024-04-02",
+                "2024-07-01"           
             ],
             "jinja": true
         },
         {
-            "name": "Simulator Y2023",
+            "name": "Simulator Y2024-Q3",
             "type": "debugpy",
             "request": "launch",
             "program": "simulator.py",
-            "consoleName": "Simulator Y2023",
+            "consoleName": "Simulator Y2024-Q3",
             "cwd": "${workspaceFolder}\\src\\simulator\\",
             "console": "integratedTerminal",
             "args": [ 
-                "2023-01-01",
-                "2023-12-29"           
+                "2024-07-02",
+                "2024-10-01"           
             ],
             "jinja": true
         },
@@ -80,7 +80,7 @@
             "type": "debugpy",
             "request": "launch",
             "program": "simulator.py",
-            "consoleName": "Simulator Y2016-2020",
+            "consoleName": "Simulator Today",
             "cwd": "${workspaceFolder}\\src\\simulator\\",
             "console": "integratedTerminal",
             "args": [ 
@@ -107,11 +107,15 @@
     "compounds": [
         {
             "name": "API + Simulator",
-            "configurations": ["Python Debugger: FastAPI",  "Simulator Y2021","Simulator Y2022","Simulator Y2023","Simulator Y2024"]
+            "configurations": ["Python Debugger: FastAPI",  "Simulator Y2024-Q1","Simulator Y2024-Q2","Simulator Y2024-Q3",]
         },
         {
             "name": "API + Simulator no trades",
             "configurations": ["Python Debugger: FastAPI",  "Simulator dummy"]
+        },
+        {
+            "name": "API + Simulator Today",
+            "configurations": ["Python Debugger: FastAPI",  "Simulator Today"]
         }
     ]
 }

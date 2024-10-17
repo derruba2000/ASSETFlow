@@ -17,7 +17,11 @@ SELECT
     P.PORTFOLIO_TYPE,
     CAST(P.CREATION_DATE AS DATE) AS CREATION_DATE,
     P.TOTAL_VALUE,
-    CURRENT_DATE AS VALID_FROM, 
+    {% if is_incremental() %}
+        CURRENT_DATE AS VALID_FROM, 
+    {% else %}
+        CAST('2000-01-01' AS DATE) AS VALID_FROM, 
+    {% endif %}
     HASH(P.PORTFOLIO_ID, 
          P.PORTFOLIO_NAME,
          P.PORTFOLIO_TYPE) AS PK_PORTFOLIO_ID ,
