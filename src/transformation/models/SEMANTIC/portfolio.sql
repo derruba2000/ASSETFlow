@@ -20,5 +20,6 @@ SELECT
     CURRENT_DATE AS VALID_FROM, 
     HASH(P.PORTFOLIO_ID, 
          P.PORTFOLIO_NAME,
-         P.PORTFOLIO_TYPE) AS PK_PORTFOLIO_ID 
+         P.PORTFOLIO_TYPE) AS PK_PORTFOLIO_ID ,
+         {{"'" ~var("processid")~ "'" }} AS ProcessId
 FROM {{source('ASSET_FLOW_STAGING','STREAM_PORTFOLIOS')}} AS P

@@ -23,5 +23,6 @@ SELECT
          P.INVESTOR_TYPE,
          P.CONTACT_INFO,
          P.RISK_TOLERANCE,
-         P.ACCOUNT_BALANCE) AS PK_INVESTOR_ID 
+         P.ACCOUNT_BALANCE) AS PK_INVESTOR_ID,
+    {{"'" ~var("processid")~ "'" }} AS ProcessId
 FROM {{source('ASSET_FLOW_STAGING','STREAM_INVESTORS')}} AS P

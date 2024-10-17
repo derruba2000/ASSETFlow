@@ -2,7 +2,7 @@
             materialized='incremental',
             strategy="delete+insert",
             schema="SEMANTIC",
-            unique_key=['PK_PORTFOLIO_ID','TRADE_DATE']
+            unique_key=['PK_PORTFOLIO_ID','market_Date']
         ) 
 }}
 
@@ -46,6 +46,8 @@ PortfolioValuePerDay AS (
 SELECT 
     PK_PORTFOLIO_ID,
         market_Date,
-    PortfolioValue
+    PortfolioValue,
+    CURRENT_TIMESTAMP AS created_at,
+    {{"'" ~var("processid")~ "'" }} AS ProcessId
 FROM 
     PortfolioValuePerDay

@@ -21,5 +21,6 @@ SELECT
         A.ASSET_NAME, 
         A.ASSET_TYPE, 
         A.TICKER_SYMBOL, 
-        A.CURRENT_PRICE) AS PK_ASSET_ID 
+        A.CURRENT_PRICE) AS PK_ASSET_ID,
+    {{"'" ~var("processid")~ "'" }} AS ProcessId
 FROM {{source('ASSET_FLOW_STAGING','STREAM_ASSETS')}} AS A

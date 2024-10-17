@@ -58,7 +58,9 @@ AUMPerInvestor AS (
 SELECT 
     PK_PORTFOLIO_ID,
     SUM(AUM) AS TotalAUM,
-    DAY_CLOSE
+    DAY_CLOSE,
+    CURRENT_TIMESTAMP AS created_at,
+    {{"'" ~var("processid")~ "'" }} AS ProcessId
 FROM 
     AUMPerInvestor
 GROUP BY 

@@ -27,7 +27,9 @@ SELECT
     T.TRADE_PRICE,
     T.QUANTITY,
     A.PK_ASSET_ID AS PK_ASSET_ID,
-    P.PK_PORTFOLIO_ID
+    P.PK_PORTFOLIO_ID,
+    {{"'" ~var("processid")~ "'" }} AS ProcessId,
+    CURRENT_TIMESTAMP AS created_at
 FROM CTE_TRADES AS T
 ASOF JOIN {{ref('asset')}} AS A 
     MATCH_CONDITION(T.TRADE_DATE  >= A.VALID_FROM) ON A.ASSET_ID=T.ASSET_ID
