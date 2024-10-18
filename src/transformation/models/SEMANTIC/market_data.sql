@@ -1,7 +1,8 @@
 {{ config(
             materialized='incremental',
             schema="SEMANTIC",
-            unique_key=['MARKET_DATA_ID']
+            unique_key=['MARKET_DATA_ID'],
+            tags=["fact_table"]
         ) 
 }}
 

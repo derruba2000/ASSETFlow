@@ -2,7 +2,8 @@
             materialized='incremental',
             strategy="delete+insert",
             schema="SEMANTIC",
-            unique_key=['PK_POSITION']
+            unique_key=['PK_POSITION'],
+            tags=["fact_table"]
         ) 
 }}
 

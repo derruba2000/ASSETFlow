@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: portfolio  # Replace with the actual model name
+    description: "This model processes portfolio data from the ASSET_FLOW_STAGING source and includes incremental logic."
+    columns:
+      - name: PORTFOLIO_ID
+        description: "Unique identifier for the portfolio."
+        tests:
+          - not_null
+          - unique
+          
+      - name: INVESTOR_ID
+        description: "Unique identifier for the investor associated with the portfolio."
+        tests:
+          - not_null
+
+      - name: PORTFOLIO_NAME
+        description: "Name of the portfolio."
+        tests:
+          - not_null
+
+      - name: PORTFOLIO_TYPE
+        description: "Type of the portfolio."
+        tests:
+          - not_null
+
+      - name: CREATION_DATE
+        description: "The creation date of the portfolio, cast to a DATE type."
+        tests:
+          - not_null
+
+      - name: TOTAL_VALUE
+        description: "The total value of the portfolio."
+
+      - name: VALID_FROM
+        description: "The date from which the record is considered valid. Uses CURRENT_DATE for incremental logic."
+
+      - name: PK_PORTFOLIO_ID
+        description: "Primary key generated as a hash of PORTFOLIO_ID, PORTFOLIO_NAME, and PORTFOLIO_TYPE."
+
+      - name: ProcessId
+        description: "Process ID for the current dbt run, using a variable for the process ID."
+        tests:
+          - not_null

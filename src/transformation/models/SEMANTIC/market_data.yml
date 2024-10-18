@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: market_data  # Replace with the actual model name if different
+    description: "This model processes market data from the ASSET_FLOW_STAGING source and implements incremental loading logic."
+    config:
+      tags: ["fact_table"]  # Tags specified in the model config
+    columns:
+      - name: MARKET_DATA_ID
+        description: "Unique identifier for the market data."
+        tests:
+          - not_null
+          - unique
+
+      - name: MARKET_DATE
+        description: "The date on which the market data was recorded."
+        tests:
+          - not_null
+
+      - name: OPENING_PRICE
+        description: "The opening price of the asset on the given market date."
+
+      - name: CLOSING_PRICE
+        description: "The closing price of the asset on the given market date."
+
+      - name: HIGH_PRICE
+        description: "The highest price of the asset on the given market date."
+
+      - name: LOW_PRICE
+        description: "The lowest price of the asset on the given market date."
+
+      - name: VOLUME
+        description: "The trading volume for the asset on the given market date."
+
+      - name: ASSET_ID
+        description: "Foreign key that links the market data to the asset being traded."
+        tests:
+          - not_null
+
+      - name: PK_ASSET_ID
+        description: "Foreign key of the asset generated from the ASSET table. Used to join with market data."
+
+      - name: CREATED_AT
+        description: "Timestamp indicating when the record was created in the SEMANTIC schema."
+
+      - name: ProcessId
+        description: "Process ID for the current dbt run, using a variable for the process ID."
+        tests:
+          - not_null

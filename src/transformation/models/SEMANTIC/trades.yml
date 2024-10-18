@@ -1,3 +1,62 @@
+version: 2
+
+models:
+  - name: trades  # Replace with the actual model name if it's different
+    description: "This model processes trade data from the ASSET_FLOW_STAGING source and includes incremental logic to handle new trades."
+    config:
+      tags: ["fact_table"]  # Tags specified in the model config
+    columns:
+      - name: TRADE_ID
+        description: "Unique identifier for the trade."
+        tests:
+          - not_null
+          - unique
+
+      - name: TRADE_TYPE
+        description: "The type of trade, e.g., buy or sell."
+        tests:
+          - not_null
+
+      - name: TRADE_DATE
+        description: "The date when the trade was executed."
+        tests:
+          - not_null
+
+      - name: TRADE_PRICE
+        description: "The price at which the trade was executed."
+
+      - name: QUANTITY
+        description: "The quantity of assets involved in the trade."
+
+      - name: ASSET_ID
+        description: "Foreign key that links the trade to the asset being traded."
+        tests:
+          - not_null
+
+      - name: PK_ASSET_ID
+        description: "Primary key of the asset from the ASSET table, used to join with trade data."
+        tests:
+          - not_null
+
+      - name: PORTFOLIO_ID
+        description: "Foreign key that links the trade to the portfolio that executed the trade."
+        tests:
+          - not_null
+
+      - name: PK_PORTFOLIO_ID
+        description: "Primary key of the portfolio from the PORTFOLIO table, used to join with trade data."
+        tests:
+          - not_null
+
+      - name: ProcessId
+        description: "Process ID for the current dbt run, using a variable for the process ID."
+        tests:
+          - not_null
+
+      - name: created_at
+        description: "Timestamp indicating when the record was created in the SEMANTIC schema."
+
+
 unit_tests:
   - name: test_incremental_load_handling
     description: "Ensure that the model processes only new trades based on the incremental loading logic."

@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: investor_model  # Replace with the actual model name (e.g., investors)
+    description: "This model processes investor data from the ASSET_FLOW_STAGING source and includes incremental logic."
+    columns:
+      - name: INVESTOR_ID
+        description: "Unique identifier for the investor."
+        tests:
+          - not_null
+          - unique
+
+      - name: NAME
+        description: "The name of the investor."
+        tests:
+          - not_null
+
+      - name: INVESTOR_TYPE
+        description: "The type of investor, e.g., retail, institutional, etc."
+        tests:
+          - not_null
+
+      - name: CONTACT_INFO
+        description: "Contact information for the investor, which may include email, phone, etc."
+
+      - name: RISK_TOLERANCE
+        description: "The risk tolerance level of the investor (e.g., low, medium, high)."
+
+      - name: ACCOUNT_BALANCE
+        description: "The current balance of the investor's account."
+
+      - name: VALID_FROM
+        description: "The date from which the record is considered valid. Uses CURRENT_DATE for incremental logic."
+        tests:
+          - not_null
+
+      - name: PK_INVESTOR_ID
+        description: "Primary key generated as a hash of INVESTOR_ID, NAME, INVESTOR_TYPE, CONTACT_INFO, RISK_TOLERANCE, and ACCOUNT_BALANCE."
+        tests:
+          - not_null
+          - unique
+
+      - name: ProcessId
+        description: "Process ID for the current dbt run, using a variable for the process ID."
+        tests:
+          - not_null
