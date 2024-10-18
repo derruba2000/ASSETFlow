@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: asset
+    description : Financial assets available, slow changing dimension 2
+    columns:
+      - name: asset_id
+        description: The primary key for the line of business application table
+        tests:
+          - not_null
+
+      - name: asset_name
+        description: The name of the asset
+        tests:
+          - not_null
+
+      - name: asset_type
+        description: The type of asset - stock, etf, commoditie
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['crypto','stocks','etfs','commodities','derivatives','futures','options','indices','bonds']
+              severity: warn
+
+      - name: asset_classbonds
+
+      - name: asset_description
+
+      - name: ticker_symbol
+        description: The ticker symbol of the asset
+        tests:
+          - not_null
+
+      - name: current_price
+        description: The current price of the asset
+        tests:
+          - not_null
+
+      - name: pk_asset_id
+        description: The primary key for the asset dimension table
+        tests:
+          - unique
+          - not_null
+
+
+      

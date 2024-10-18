@@ -1,0 +1,28 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "dbt docs",
+            "type": "shell",
+            "command" : "C:\\src\\assetflow\\.venv\\Scripts\\activate.bat && cd C:\\src\\assetflow\\src\\transformation && dbt docs generate && dbt docs serve",
+            "options": {
+                    "shell":{
+                        "executable": "cmd.exe",
+                        "args": [
+                            "/d",
+                            "/c"
+                        ]
+                    }
+            },
+            "presentation":{
+                "reveal": "always",
+                "panel": "new",
+                "focus": false,
+                "clear": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}

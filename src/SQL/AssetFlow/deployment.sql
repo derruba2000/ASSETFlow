@@ -1,20 +1,22 @@
 DROP TABLE IF EXISTS assets;
 DROP TABLE IF EXISTS investors;
 DROP TABLE IF EXISTS marketdata;
+DROP TABLE IF EXISTS portfolio_asset_allocations;
 DROP TABLE IF EXISTS portfolios;
 DROP TABLE IF EXISTS riskmetrics;
 DROP TABLE IF EXISTS trades;
 
+
 -- assets definition
 
-CREATE  TABLE assets (
+CREATE TABLE assets (
 	"AssetID" INTEGER NOT NULL, 
 	"AssetName" VARCHAR, 
 	"AssetType" VARCHAR, 
 	"TickerSymbol" VARCHAR, 
-	"CurrentPrice" FLOAT,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	"CurrentPrice" FLOAT, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
 	PRIMARY KEY ("AssetID")
 );
 
@@ -29,9 +31,11 @@ CREATE TABLE investors (
 	"InvestorType" VARCHAR, 
 	"ContactInfo" VARCHAR, 
 	"RiskTolerance" VARCHAR, 
-	"AccountBalance" FLOAT,
-	created_at  DEFAULT CURRENT_TIMESTAMP,
-	updated_at  DEFAULT CURRENT_TIMESTAMP,
+	"AccountBalance" FLOAT, 
+	is_active BOOLEAN, 
+	inactive_at DATETIME, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
 	PRIMARY KEY ("InvestorID")
 );
 
@@ -49,9 +53,9 @@ CREATE TABLE marketdata (
 	"ClosingPrice" FLOAT, 
 	"HighPrice" FLOAT, 
 	"LowPrice" FLOAT, 
-	"Volume" INTEGER,
-	created_at  DEFAULT CURRENT_TIMESTAMP,
-	updated_at  DEFAULT CURRENT_TIMESTAMP,
+	"Volume" INTEGER, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
 	PRIMARY KEY ("MarketDataID"), 
 	FOREIGN KEY("AssetID") REFERENCES assets ("AssetID")
 );
@@ -67,9 +71,11 @@ CREATE TABLE portfolios (
 	"PortfolioName" VARCHAR, 
 	"PortfolioType" VARCHAR, 
 	"CreationDate" DATE, 
-	"TotalValue" FLOAT,
-	created_at  DEFAULT CURRENT_TIMESTAMP,
-	updated_at  DEFAULT CURRENT_TIMESTAMP,
+	"TotalValue" FLOAT, 
+	is_active BOOLEAN, 
+	inactive_at DATETIME, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
 	PRIMARY KEY ("PortfolioID"), 
 	FOREIGN KEY("InvestorID") REFERENCES investors ("InvestorID")
 );
@@ -85,9 +91,9 @@ CREATE TABLE riskmetrics (
 	"AssetID" INTEGER, 
 	"MetricName" VARCHAR, 
 	"MetricValue" FLOAT, 
-	"CalculationDate" DATE,
-	created_at  DEFAULT CURRENT_TIMESTAMP,
-	updated_at  DEFAULT CURRENT_TIMESTAMP,
+	"CalculationDate" DATE, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
 	PRIMARY KEY ("RiskMetricID"), 
 	FOREIGN KEY("PortfolioID") REFERENCES portfolios ("PortfolioID"), 
 	FOREIGN KEY("AssetID") REFERENCES assets ("AssetID")
@@ -105,12 +111,29 @@ CREATE TABLE trades (
 	"TradeType" VARCHAR, 
 	"TradeDate" DATE, 
 	"TradePrice" FLOAT, 
-	"Quantity" INTEGER,
-	created_at  DEFAULT CURRENT_TIMESTAMP,
-	updated_at  DEFAULT CURRENT_TIMESTAMP,
+	"Quantity" INTEGER, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
 	PRIMARY KEY ("TradeID"), 
 	FOREIGN KEY("PortfolioID") REFERENCES portfolios ("PortfolioID"), 
 	FOREIGN KEY("AssetID") REFERENCES assets ("AssetID")
 );
 
 CREATE INDEX "ix_trades_TradeID" ON trades ("TradeID");
+
+
+-- portfolio_asset_allocations definition
+
+CREATE TABLE portfolio_asset_allocations (
+	"AllocationID" INTEGER NOT NULL, 
+	"PortfolioID" INTEGER NOT NULL, 
+	"AssetID" INTEGER NOT NULL, 
+	quantity FLOAT NOT NULL, 
+	purchase_price FLOAT NOT NULL, 
+	allocated_at DATETIME NOT NULL, 
+	valid_to DATETIME, 
+	is_allocated BOOLEAN NOT NULL, 
+	PRIMARY KEY ("AllocationID"), 
+	FOREIGN KEY("PortfolioID") REFERENCES portfolios ("PortfolioID"), 
+	FOREIGN KEY("AssetID") REFERENCES assets ("AssetID")
+);

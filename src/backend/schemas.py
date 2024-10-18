@@ -1,7 +1,8 @@
 # schemas.py
 from pydantic import BaseModel
-from typing import Optional
-from datetime import date
+from typing import Optional, List
+from datetime import date, datetime
+from datetime import datetime
 
 class InvestorCreate(BaseModel):
     Name: str
@@ -10,6 +11,7 @@ class InvestorCreate(BaseModel):
     RiskTolerance: str
     AccountBalance: float
 
+
 class Investor(BaseModel):
     InvestorID: int
     Name: str
@@ -17,6 +19,7 @@ class Investor(BaseModel):
     ContactInfo: str
     RiskTolerance: str
     AccountBalance: float
+    created_at: datetime
 
     class Config:
         orm_mode = True
@@ -35,6 +38,7 @@ class Portfolio(BaseModel):
     PortfolioType: str
     CreationDate: date
     TotalValue: float
+    created_at: datetime
 
     class Config:
         orm_mode = True
@@ -51,6 +55,7 @@ class Asset(BaseModel):
     AssetType: str
     TickerSymbol: str
     CurrentPrice: float
+    created_at: datetime
 
     class Config:
         orm_mode = True
@@ -114,3 +119,42 @@ class RiskMetric(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+
+
+class PortfolioAssetAllocationBase(BaseModel):
+    quantity: float
+    purchase_price: float
+
+class PortfolioAssetAllocationCreate(PortfolioAssetAllocationBase):
+    pass
+
+class PortfolioAssetAllocation(PortfolioAssetAllocationBase):
+    AllocationID: int
+    PortfolioID: int
+    AssetID: int
+    allocated_at: datetime
+    valid_to: Optional[datetime] = None
+    is_allocated: bool
+
+    class Config:
+        orm_mode = True
+
+
+class MultipleAssetsCreate(BaseModel):
+    assets: List[AssetCreate]
+
+
+class MultipleInvestorsCreate(BaseModel):
+    investors: List[InvestorCreate]
+
+class MultiplePortfoliosCreate(BaseModel):
+    portfolios: List[PortfolioCreate]
+
+class MultipleTradesCreate(BaseModel):
+    trades: List[TradeCreate]
+
+
+class MultipleMarketDataCreate(BaseModel):
+    marketdata: List[MarketDataCreate]

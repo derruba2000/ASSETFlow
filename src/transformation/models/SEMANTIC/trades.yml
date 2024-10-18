@@ -1,0 +1,22 @@
+unit_tests:
+  - name: test_incremental_load_handling
+    description: "Ensure that the model processes only new trades based on the incremental loading logic."
+    model: trades
+    overrides:
+      macros:
+        is_incremental: false
+    given:
+      - input: source('ASSET_FLOW_STAGING', 'STREAM_TRADES')
+        rows:
+          - {TRADE_ID: 1, TRADE_TYPE: 'BUY', TRADE_DATE: '2023-10-09', TRADE_PRICE: 100.50, QUANTITY: 10, ASSET_ID: 100, PORTFOLIO_ID: 200}
+          - {TRADE_ID: 2, TRADE_TYPE: 'SELL', TRADE_DATE: '2023-10-11', TRADE_PRICE: 150.75, QUANTITY: 15, ASSET_ID: 101, PORTFOLIO_ID: 201}
+      - input: ref('asset')
+        rows:
+          - {ASSET_ID: 101, PK_ASSET_ID: 1001, VALID_FROM: '2023-10-01'}
+      - input: ref('portfolio')
+        rows:
+          - {PORTFOLIO_ID: 201, PK_PORTFOLIO_ID: 2001, VALID_FROM: '2023-09-01'}
+    expect:
+      rows:
+        - {TRADE_ID: 1, TRADE_TYPE: 'BUY', TRADE_DATE: '2023-10-09', TRADE_PRICE: 100.50, QUANTITY: 10, PK_ASSET_ID: null, PK_PORTFOLIO_ID: null}
+        - {TRADE_ID: 2, TRADE_TYPE: 'SELL', TRADE_DATE: '2023-10-11', TRADE_PRICE: 150.75, QUANTITY: 15, PK_ASSET_ID: 1001, PK_PORTFOLIO_ID: 2001}
