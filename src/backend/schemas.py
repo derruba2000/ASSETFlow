@@ -11,6 +11,7 @@ class InvestorCreate(BaseModel):
     RiskTolerance: str
     AccountBalance: float
 
+
 class Investor(BaseModel):
     InvestorID: int
     Name: str
@@ -18,6 +19,7 @@ class Investor(BaseModel):
     ContactInfo: str
     RiskTolerance: str
     AccountBalance: float
+    created_at: datetime
 
     class Config:
         orm_mode = True
@@ -36,6 +38,7 @@ class Portfolio(BaseModel):
     PortfolioType: str
     CreationDate: date
     TotalValue: float
+    created_at: datetime
 
     class Config:
         orm_mode = True
@@ -52,6 +55,7 @@ class Asset(BaseModel):
     AssetType: str
     TickerSymbol: str
     CurrentPrice: float
+    created_at: datetime
 
     class Config:
         orm_mode = True

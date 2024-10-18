@@ -39,9 +39,10 @@ SELECT
     PK_PORTFOLIO_ID,
     PK_ASSET_ID,
     TRADE_DATE,
-    PK_POSITION
-    Position,
+    PK_POSITION,
+    POSITION,
     CURRENT_TIMESTAMP AS created_at,
     {{"'" ~var("processid")~ "'" }} AS ProcessId
 FROM 
     PositionPerDay
+    WHERE PK_PORTFOLIO_ID IS NOT NULL AND PK_ASSET_ID IS NOT NULL

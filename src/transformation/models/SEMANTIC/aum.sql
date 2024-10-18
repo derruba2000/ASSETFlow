@@ -18,7 +18,7 @@ WITH CumulativeTrades AS (
     FROM 
         {{ref('trades')}} t
     {% if is_incremental() %}
-        WHERE T.DAY_CLOSE  >= (select coalesce(max(DAY_CLOSE),'1900-01-01') from {{ this }} )
+        WHERE T.TRADE_DATE  >= (select coalesce(max(DAY_CLOSE),'1900-01-01') from {{ this }} )
     {% endif %}
 ),
 PositionPerAsset AS (
@@ -59,9 +59,10 @@ SELECT
     PK_PORTFOLIO_ID,
     SUM(AUM) AS TotalAUM,
     DAY_CLOSE,
-    CURRENT_TIMESTAMP AS created_at,
+    CURRENT_TIMESTAMP AS CREATED_AT,
     {{"'" ~var("processid")~ "'" }} AS ProcessId
 FROM 
     AUMPerInvestor
+WHERE PK_PORTFOLIO_ID IS NOT NULL
 GROUP BY 
     ALL
