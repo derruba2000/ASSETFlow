@@ -1,5 +1,5 @@
 
-# Vanguard Horizons Capital - Data Pipeline with Snowflake, DLT Hub, dbt, and Power BI
+# Vanguard Horizons Capital - Data Pipeline with Snowflake, dlt, dbt, and Power BI
 
 ## Overview
 
