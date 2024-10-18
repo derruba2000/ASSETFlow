@@ -72,7 +72,7 @@ Before setting up the pipeline, ensure you have the following:
 
 1. Configure DLT Hub to extract data from the `AssetFlow` SQLite database.
 2. Set up Snowflake as the destination for the ingested data.
-3. Schedule the ingestion pipeline to run at regular intervals.
+
 
 ### Step 2: Transform Data with dbt
 
