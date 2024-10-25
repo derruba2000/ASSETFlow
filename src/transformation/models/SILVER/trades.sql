@@ -1,6 +1,7 @@
 {{ config(
             materialized='incremental',
-            schema="SEMANTIC",
+            schema="INVESTMENT_MANAGEMENT",
+            database="SILVER",
             unique_key=['TRADE_ID'],
             tags=["fact_table"]
         ) 
@@ -15,7 +16,7 @@ WITH CTE_TRADES AS (
     T.QUANTITY,
     T.ASSET_ID,
     T.PORTFOLIO_ID
-    FROM {{source('ASSET_FLOW_STAGING','STREAM_TRADES')}} AS T
+    FROM {{source('BRONZE_ASSET_FLOW','STREAM_TRADES')}} AS T
     {% if is_incremental() %}
         WHERE CAST(T.TRADE_DATE AS DATE) >= (select coalesce(max(TRADE_DATE),'1900-01-01') from {{ this }} )
     {% endif %}

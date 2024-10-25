@@ -22,9 +22,6 @@ models:
               values: ['crypto','stocks','etfs','commodities','derivatives','futures','options','indices','bonds']
               severity: warn
 
-      - name: asset_classbonds
-
-      - name: asset_description
 
       - name: ticker_symbol
         description: The ticker symbol of the asset

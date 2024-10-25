@@ -5,7 +5,8 @@ PORTFOLIO table slow changing dimension type 2
 
 {{ config(
             materialized='incremental',
-            schema="SEMANTIC",
+            schema="INVESTMENT_MANAGEMENT",
+            database="SILVER",
             unique_key=['PK_PORTFOLIO_ID']
         ) 
 }}
@@ -26,4 +27,4 @@ SELECT
          P.PORTFOLIO_NAME,
          P.PORTFOLIO_TYPE) AS PK_PORTFOLIO_ID ,
          {{"'" ~var("processid")~ "'" }} AS ProcessId
-FROM {{source('ASSET_FLOW_STAGING','STREAM_PORTFOLIOS')}} AS P
+FROM {{source('BRONZE_ASSET_FLOW','STREAM_PORTFOLIOS')}} AS P

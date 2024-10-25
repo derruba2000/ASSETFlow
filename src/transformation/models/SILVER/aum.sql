@@ -1,7 +1,8 @@
 {{ config(
             materialized='incremental',
             strategy="delete+insert",
-            schema="SEMANTIC",
+            schema="INVESTMENT_MANAGEMENT",
+            database="SILVER",
             unique_key=['PK_PORTFOLIO_ID','DAY_CLOSE'],
             tags=["fact_table"]
         ) 

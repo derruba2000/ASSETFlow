@@ -5,7 +5,8 @@ INVESTOR table slow changing dimension type 2
 
 {{ config(
             materialized='incremental',
-            schema="SEMANTIC",
+            schema="INVESTMENT_MANAGEMENT",
+            database="SILVER",
             unique_key=['PK_INVESTOR_ID']
         ) 
 }}
@@ -29,4 +30,4 @@ SELECT
          P.RISK_TOLERANCE,
          P.ACCOUNT_BALANCE) AS PK_INVESTOR_ID,
     {{"'" ~var("processid")~ "'" }} AS ProcessId
-FROM {{source('ASSET_FLOW_STAGING','STREAM_INVESTORS')}} AS P
+FROM {{source('BRONZE_ASSET_FLOW','STREAM_INVESTORS')}} AS P

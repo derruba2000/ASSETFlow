@@ -1,6 +1,7 @@
 {{ config(
             materialized='incremental',
-            schema="SEMANTIC",
+            schema="INVESTMENT_MANAGEMENT",
+            database="SILVER",
             unique_key=['MARKET_DATA_ID'],
             tags=["fact_table"]
         ) 
@@ -17,7 +18,7 @@ WITH CTE_MARKET_DATA AS (
     M.LOW_PRICE, 
     M."VOLUME",
     M.ASSET_ID,
-    FROM {{source('ASSET_FLOW_STAGING','STREAM_MARKET_DATA')}} AS M
+    FROM {{source('BRONZE_ASSET_FLOW','STREAM_MARKET_DATA')}} AS M
     {% if is_incremental() %}
     WHERE CAST(M."DATE" AS DATE) >= (select coalesce(max(MARKET_DATE),'1900-01-01') from {{ this }} )
     {% endif %}

@@ -7,7 +7,8 @@ ASSET table slow changing dimension type 2
             materialized='incremental',
             incremental_strategy="merge",
             pre_hook="alter session set query_tag='elt|asset'",
-            schema="SEMANTIC",
+            schema="INVESTMENT_MANAGEMENT",
+            database="SILVER",
             unique_key=['PK_ASSET_ID']
         ) 
 }}
@@ -29,4 +30,4 @@ SELECT
         A.TICKER_SYMBOL, 
         A.CURRENT_PRICE) AS PK_ASSET_ID,
     {{"'" ~var("processid")~ "'" }} AS ProcessId
-FROM {{source('ASSET_FLOW_STAGING','STREAM_ASSETS')}} AS A
+FROM {{source('BRONZE_ASSET_FLOW','STREAM_ASSETS')}} AS A
